@@ -29,9 +29,10 @@ namespace QuanLyDoAn.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            RoleManager.Create(new IdentityRole("SinhVien"));
-            RoleManager.Create(new IdentityRole("GiangVien"));
+            //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            //RoleManager.Create(new IdentityRole("Admin"));
+            //RoleManager.Create(new IdentityRole("SinhVien"));
+            //RoleManager.Create(new IdentityRole("GiangVien"));
         }
     }
 }
