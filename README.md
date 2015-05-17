@@ -1,4 +1,7 @@
 # QLDA
 Dự án Quản lý đồ án
 ##Công nghệ sử dụng: 
-ASP.NET MVC 5, Entity Framework 6, Bootstrap 3, JQuery ajax.
+* 01- ASP.NET MVC 5
+* 02- Entity Framework 6
+* 03- Bootstrap 3
+* 04- JQuery Ajax
