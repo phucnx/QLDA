@@ -1,0 +1,75 @@
+﻿@using QuanLyDoAn.Models.Entities;
+@model IEnumerable<IGrouping<DeTai, DangKy>>
+@{
+    ViewBag.Title = "Danh sách hướng dẫn";
+    int count = 0;
+    string mssv = (string)TempData["MSSV"];
+}
+<h2>Danh sách sinh viên đăng ký đồ án</h2>
+<table class="table table-bordered">
+    <tr>
+        <th width="5%">STT</th>
+        <th width="40%">Đề tài</th>
+        <th width="20%">Sinh viên</th>
+        <th width="10%">Điểm QT</th>
+        <th width="10%">Điểm Thi</th>
+        <th width="10%"></th>
+    </tr>
+    @foreach (var detai in Model)
+    {
+        count++;
+        var rs = detai.Key.DangKies.Count;
+        var data = detai.ToList();
+        <tr>
+            <td class="text-center" rowspan="@rs">@count</td>
+            <td rowspan="@rs">@detai.Key.TenDT</td>
+            @if (data[0].MSSV == mssv)
+            {
+                <td class="text-success">@data[0].SinhVien.HoTen</td>
+                <td class="text-center text-success">@data[0].DiemQT</td>
+                <td class="text-center text-success">@data[0].DiemThi</td>
+            }
+            else
+            {
+                <td>@data[0].SinhVien.HoTen</td>
+                <td class="text-center">@data[0].DiemQT</td>
+                <td class="text-center">@data[0].DiemThi</td>
+            }
+            <td class="text-center"><a class="btn btn-primary" role="button" href="/DangKy/ChoDiem/@data[0].MSSV">Cho điểm</a></td>
+        </tr>
+        for (int i = 1; i < rs; i++)
+        {
+            <tr>
+                @if (data[i].MSSV == mssv)
+                {
+                    <td class="text-success">@data[i].SinhVien.HoTen</td>
+                    <td class="text-center text-success">@data[i].DiemQT</td>
+                    <td class="text-center text-success">@data[i].DiemThi</td>
+                }
+                else
+                {
+                    <td>@data[i].SinhVien.HoTen</td>
+                    <td class="text-center">@data[i].DiemQT</td>
+                    <td class="text-center">@data[i].DiemThi</td>
+                }
+                <td class="text-center"><a class="btn btn-primary" role="button" href="/DangKy/ChoDiem/@data[i].MSSV">Cho điểm</a></td>
+            </tr>
+        }
+    }
+</table>
+<style>
+    ul {
+        list-style-type: none;
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+<script>
+    var message = '@Html.Raw(TempData["Message"])';
+    if (message != '') {
+        alert(message);
+    }
+</script>
+

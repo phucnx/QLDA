@@ -1,0 +1,51 @@
+﻿@model IEnumerable<QuanLyDoAn.Models.Entities.GiangVien>
+
+@{
+    ViewBag.Title = "Danh sách giảng viên";
+}
+
+<h2>Danh sách giảng viên</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary", @role = "button" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MSGV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HoTen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgaySinh)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MSGV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinh)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = item.MSGV }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.MSGV }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MSGV })
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    var message = '@Html.Raw(TempData["Message"])';
+    if (message != '') {
+        alert(message);
+    }
+</script>

@@ -1,0 +1,202 @@
+﻿@model IEnumerable<QuanLyDoAn.Models.Entities.DeTai>
+
+@{
+    ViewBag.Title = "Danh sách đề tài";
+}
+
+<h2>Danh sách đề tài</h2>
+<div id="content">
+    <table class="table table-bordered">
+        <tr>
+            <th width="7%">
+                @Html.DisplayNameFor(model => model.MaDT)
+            </th>
+            <th width="20%">
+                @Html.DisplayNameFor(model => model.TenDT)
+            </th>
+            <th width="13%">
+                @Html.DisplayNameFor(model => model.BoMon.TenBM)
+            </th>
+            <th width="40%">
+                @Html.DisplayNameFor(model => model.NoiDung)
+            </th>
+            <th width="7%">
+                Đã ĐK
+            </th>
+            <th width="7%">
+                @Html.DisplayNameFor(model => model.MaxSV)
+            </th>
+            @if (ViewBag.IsStudent)
+            {
+                <th width="5%">
+                    Đăng ký
+                </th>
+            }
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoMon.TenBM)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoiDung)
+                </td>
+                <td id="dkCount">
+                    @Html.DisplayFor(modelItem => item.DangKies.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxSV)
+                </td>
+                @if (ViewBag.IsStudent)
+                {
+                    <td>
+                        <button onclick="DangKy('@item.MaDT')" class="btn btn-primary">Đăng ký</button>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+    @if (ViewBag.IsStudent)
+    {
+        <hr />
+        if (ViewBag.Data != null)
+        {
+            QuanLyDoAn.Controllers.FrontEnd.DkViewModel data = ViewBag.Data;
+            <div class="info">
+                <h4>Chi tiết đăng ký: </h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="7%">Mã đề tài</th>
+                            <th width="20%">Tên đề tài</th>
+                            <th width="13%">Bộ môn</th>
+                            <th width=35%>Nội dung</th>
+                            <th width="13%">GV Hướng dẫn</th>
+                            <th width="10%">Trạng thái</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@data.MaDT</td>
+                            <td>@data.TenDT</td>
+                            <td>@data.BoMon</td>
+                            <td>@data.NoiDung</td>
+                            <td>@data.GVHD</td>
+                            <td id="status">@data.TrangThai</td>
+                            <td><button class="btn btn-danger" onclick="preDelete()" id="delete">Xóa</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" id="submit" style="display:none" onclick="deleteData()">Đăng ký</button>
+            </div>
+            <hr />
+            if (ViewBag.Success != null)
+            {
+                <h4>Bạn đã đăng ký thành công đồ án: @ViewBag.Success</h4>
+            }
+            else
+            {
+                <h4>Bạn đã đăng ký không thành công đồ án: @data.TenDT!</h4>
+                <p><strong>Lý do: </strong>@data.TrangThai</p>
+            }
+        }
+        else
+        {
+            <h4 class="notReg">Bạn chưa đăng ký đồ án.</h4>
+        }
+    }
+</div>
+
+<script>
+    var DangKy = function (maDT) {
+        if ($(".info").length != 0) {
+            alert("You must delete the current Project before register new one")
+        } else {
+            $.get("/QLDeTai/GetById?id=" + maDT)
+            .success(function (data) {
+                if (data != '') {
+
+                    var result = '';
+                    result = result + '<div class="info"><h4>Chi tiết đăng ký:</h4>';
+                    result += '<table class="table table-bordered">';
+                    result += '<thead><tr><th width="7%">Mã đề tài</th><th width="20%">Tên đề tài</th><th width="13%">Bộ môn</th><th width=35%>Nội dung</th><th width="13%">GV Hướng dẫn</th><th width="10%">Trạng thái</th><th>Xóa</th></tr></thead>';
+                    result += '<tbody><tr>';
+                    result += '<td>' + data.MaDT + '</td>'
+                    result += '<td>' + data.TenDT + '</td>'
+                    result += '<td>' + data.TenBM + '</td>'
+                    result += '<td>' + data.NoiDung + '</td>'
+                    result += '<td id="gvhd"></td>'
+                    result += '<td id="status"></td>'
+                    result += '<td><button class="btn btn-danger" onclick="clearData()">Xóa</button></td>'
+                    result += '</tr></tbody></table>'
+                    result += '<button class="btn btn-primary" id="submit" onclick="submit(\'' + data.MaDT + '\')">Đăng ký</button></div>'
+                    $(".notReg").hide();
+                    $("#content").append(result);
+                } else {
+                    alert("Chỉ sinh viên mới được đăng ký đồ án!")
+                }
+            })
+            .error(function (jqXHR, textStatus, errThrow) {
+                alert(errThrow);
+            })
+        }
+    }
+
+    var submit = function (MaDT) {
+        var model = {};
+        model.MaDT = MaDT;
+        $.post("/DangKy/Register", model)
+        .success(function (data) {
+            $("#status").append('<span class="text-success">' + data.TrangThai + '</span>');
+            $("#gvhd").append(data.GVHD);
+            var appText = '<hr />';
+            var count = $("#dkCount").text();
+            var dkCount = parseInt(count) + 1;
+            $("#dkCount").text(dkCount);
+            if (data.TrangThai == "Thành công") {
+                appText += '<h4>Bạn đã đăng ký thành công đồ án: ' + data.TenDT + '</h4>';
+            } else {
+                appText += '<h4>Bạn đã đăng ký không thành công đồ án: ' + data.TenDT + '</h4>';
+                appText += '<p><strong>Lý do: </strong>' + data.TrangThai + '</p>';
+            }
+            $("#content").append(appText);
+            $("#submit").hide();
+        })
+        .error(function (err) {
+            console.log(err);
+        })
+    }
+
+    var clearData = function () {
+        var status = $("#status").text();
+        if (status == "") {
+            $(".info").remove();
+            $(".notReg").show();
+        }
+        else {
+            $("#status").html("<span class='text-danger'>Chuẩn bị xóa</span>");
+            $("#submit").show();
+            $("#submit").removeAttr("onclick");
+            $("#submit").attr("onclick", "deleteData()");
+        }
+    }
+
+    var preDelete = function () {
+        $("#status").html("<span class='text-danger'>Chuẩn bị xóa</span>")
+        $("#submit").show();
+    }
+    var deleteData = function () {
+        $.post("/DangKy/Remove")
+        .success(function () {
+            location.href = "/DangKy/Index";
+        })
+    }
+</script>

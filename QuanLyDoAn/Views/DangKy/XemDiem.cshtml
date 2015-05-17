@@ -1,0 +1,54 @@
+﻿@model QuanLyDoAn.Models.Entities.DangKy
+
+@{
+    ViewBag.Title = "Xem điểm";
+}
+
+<h2>Xem điểm</h2>
+
+<div>
+    <hr />
+    @if (Model != null)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DeTai.TenDT)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DeTai.TenDT)
+            </dd>
+
+            <dt>
+                Giáo viên HD:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GiaoVien.HoTen)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DiemQT)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DiemQT)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DiemThi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DiemThi)
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <h3>Bạn chưa đăng ký đồ án.</h3>
+    }
+</div>
+<p>
+    @Html.ActionLink("Đăng ký", "Index", null, new { @class = "btn btn-primary", @role = "button" })
+</p>

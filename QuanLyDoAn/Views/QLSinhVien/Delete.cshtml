@@ -1,0 +1,48 @@
+﻿@model QuanLyDoAn.Models.Entities.SinhVien
+
+@{
+    ViewBag.Title = "Xóa sinh viên";
+}
+
+<h2>Xóa</h2>
+
+<h3>Bạn có chắc chắn muốn xóa sinh viên này?</h3>
+<div>
+    <h4>Sinh viên</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MSSV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MSSV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgaySinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgaySinh)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Quay về", "Index") |
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+        </div>
+    }
+</div>

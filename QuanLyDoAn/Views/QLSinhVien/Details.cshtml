@@ -1,0 +1,41 @@
+﻿@model QuanLyDoAn.Models.Entities.SinhVien
+
+@{
+    ViewBag.Title = "Chi tiết";
+}
+
+<h2>Chi tiết</h2>
+
+<div>
+    <h4>Sinh viên</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MSSV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MSSV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgaySinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgaySinh)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Quay về", "Index") |
+    @Html.ActionLink("Cập nhật", "Edit", new { id = Model.MSSV }, new { @class = "btn btn-primary", @role = "button" })
+</p>

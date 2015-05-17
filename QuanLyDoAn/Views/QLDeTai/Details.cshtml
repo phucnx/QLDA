@@ -1,0 +1,65 @@
+﻿@model QuanLyDoAn.Models.Entities.DeTai
+
+@{
+    ViewBag.Title = "Chi tiết đề tài";
+}
+
+<h2>Chi tiết</h2>
+
+<div>
+    <h4>Đề tài</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaDT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaDT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenDT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenDT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoMon.TenBM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoMon.TenBM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoiDung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoiDung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxSV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxSV)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Cập nhật", "Edit", new { id = Model.MaDT }) |
+    @Html.ActionLink("Quay về", "Index")
+</p>

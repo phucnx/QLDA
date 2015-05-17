@@ -1,0 +1,40 @@
+﻿@model QuanLyDoAn.Models.Entities.BoMon
+
+@{
+    ViewBag.Title = "Xóa bộ môn";
+}
+
+<h2>Xóa</h2>
+
+<h3>Bạn có chắc chắn muốn xóa bộ môn này?</h3>
+<div>
+    <h4>Bộ môn</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenBM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenBM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay về", "Index")
+        </div>
+    }
+</div>

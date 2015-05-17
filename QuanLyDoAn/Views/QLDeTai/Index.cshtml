@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QuanLyDoAn.Models.Entities.DeTai>
+
+@{
+    ViewBag.Title = "Danh sách đề tài";
+}
+
+<h2>Danh sách đề tài</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class="btn btn-primary",@role="button"})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoMon.TenBM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxSV)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BoMon.TenBM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoTa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxSV)
+        </td>
+        <td>
+            @Html.ActionLink("Cập nhật", "Edit", new { id=item.MaDT }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.MaDT }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.MaDT })
+        </td>
+    </tr>
+}
+</table>
+<script>
+    var message = '@Html.Raw(TempData["Message"])';
+    if (message != '') {
+        alert(message);
+    }
+</script>
